@@ -34,7 +34,8 @@ pipeline {
             steps {
                 script{
                     sh ''' 
-                    docker build    jobs/ -t ${name_imagen}:${tag_imagen}
+                    docker build    jobs/ -v /var/run/docker.sock:/var/run/docker.sock \
+              -v $(which docker):/usr/bin/docker -t ${name_imagen}:${tag_imagen}
                     '''
                     }
                     
