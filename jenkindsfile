@@ -14,7 +14,8 @@ pipeline {
 
             when {
                 expression { 
-                    DOCKER_EXIST = sh(returnStdout: true, script: 'echo "$(docker ps -q --filter name=${name_final})"').trim()
+                    DOCKER_EXIST = sh(returnStdout: true, script: 'echo "$(docker ps -q --filter name=${name_final} -v /var/run/docker.sock:/var/run/docker.sock \
+  -v $(which docker):/usr/bin/docker)"').trim()
                     return  DOCKER_EXIST != '' 
                 }
             }
@@ -33,7 +34,8 @@ pipeline {
             steps {
                 script{
                     sh ''' 
-                    docker build -t ${name_imagen}:${tag_imagen} .
+                    docker build -v /var/run/docker.sock:/var/run/docker.sock \
+  -v $(which docker):/usr/bin/docker -t ${name_imagen}:${tag_imagen} .
                     '''
                     }
                     
