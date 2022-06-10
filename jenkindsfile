@@ -34,7 +34,7 @@ pipeline {
             steps {
                 script{
                     sh ''' 
-                    docker build holaMundo-dev/ -t ${name_imagen}:${tag_imagen} .
+                    docker build dev/ -t ${name_imagen}:${tag_imagen} .
                     '''
                     }
                     
